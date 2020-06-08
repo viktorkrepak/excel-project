@@ -11,8 +11,9 @@
     "comma-dangle": "off",
     "require-jsdoc": "off",
     "no-unused-vars": "off",
+    "off": "off",
+    "operator-linebreak": "off",
     "semi": "off"
-
   },
   "extends": ["eslint:recommended", "google"]
 }
