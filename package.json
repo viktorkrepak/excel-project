@@ -1,7 +1,7 @@
 {
   "name": "excel-course",
   "version": "1.0.0",
-  "description": "Pure JavaScript Excel Application",
+  "description": "Pure JS Excel App",
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,24 +9,23 @@
     "build": "cross-env NODE_ENV=production webpack --mode production"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vladilenm/excel-course.git"
+    "type": "git"
   },
   "keywords": [
     "js",
     "javascript",
     "excel"
   ],
-  "author": "Vladilen Minin <vladilen.minin@gmail.com>",
+  "author": "Krepak Viktor <viktorkrepak@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vladilenm/excel-course/issues"
+    "url": "https://github.com/viktorkrepak/excel-project/issues"
   },
-  "homepage": "https://github.com/vladilenm/excel-course#readme",
   "private": true,
   "browserslist": "> 0.25%, not dead",
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/preset-env": "^7.8.4",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
@@ -48,5 +47,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
     "normalize.css": "^8.0.1"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
