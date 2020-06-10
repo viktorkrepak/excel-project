@@ -19,6 +19,21 @@ class Dom {
     return this;
   }
 
+  get data() {
+    return this.$el.dataset;
+  }
+
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector);
+  }
+
+  css(styles = {}) {
+    if (!styles) {
+      return;
+    }
+    Object.keys(styles).forEach(key => (this.$el.style[key] = styles[key]));
+  }
+
   on(eventType, callbackFn) {
     this.$el.addEventListener(eventType, callbackFn);
   }
@@ -35,6 +50,14 @@ class Dom {
       this.$el.appendChild(node);
     }
     return this;
+  }
+
+  closest(selector) {
+    return $(this.$el.closest(selector));
+  }
+
+  getCords() {
+    return this.$el.getBoundingClientRect();
   }
 }
 

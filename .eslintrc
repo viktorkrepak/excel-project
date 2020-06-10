@@ -13,7 +13,8 @@
     "no-unused-vars": "off",
     "off": "off",
     "operator-linebreak": "off",
-    "semi": "off"
+    "semi": "off",
+    "indent": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }
