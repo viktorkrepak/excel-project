@@ -5,7 +5,7 @@ export function capitalize(string) {
     return '';
   }
   // return string.charAt(0).toUpperCase() + string.slice(1);
-  return stringSplice(string, 0, 1, string.charAt(0).toUpperCase())
+  return stringSplice(string, 0, 1, string.charAt(0).toUpperCase());
 }
 
 function stringSplice(str, index, count, add) {
