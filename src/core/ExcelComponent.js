@@ -7,6 +7,8 @@ export class ExcelComponent extends DomListener {
     console.log(options);
     this.observer = options.observer;
     this.unsubscribers = [];
+    this.storeUnsub = [];
+    this.store = options.store;
     this.prepare();
   }
 
@@ -19,6 +21,17 @@ export class ExcelComponent extends DomListener {
   // Facade around EMIT function
   $emit(event, ...args) {
     this.observer.emit(event, ...args);
+  }
+
+  // Store
+
+  $dispatch(action) {
+    this.store.dispatch(action);
+  }
+
+  $subscribe(fn) {
+    this.storeUnsub = this.store.subscribe(fn);
+    this.storeUnsub.unsubscribe();
   }
 
   // Return a component template
