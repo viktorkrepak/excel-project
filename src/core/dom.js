@@ -51,15 +51,24 @@ class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
+    if (typeof text !== 'undefined') {
       this.$el.textContent = text;
       return this;
     }
     if (this.$el.tagName.toLowerCase() === 'input') {
-      return this.$el.value.trace();
+      return this.$el.value.trim();
     }
     return this.$el.textContent.trim();
   }
+  attr(attrName, value) {
+    if (value) {
+      this.$el.setAttribute(attrName, value);
+      return this;
+    } else {
+      return this.$el.getAttribute(attrName);
+    }
+  }
+
   focus() {
     this.$el.focus();
     return this;
@@ -99,6 +108,12 @@ class Dom {
 
   getCords() {
     return this.$el.getBoundingClientRect();
+  }
+  getStyles(styles = []) {
+    return styles.reduce((resObj, currentItem) => {
+      resObj[currentItem] = this.$el.style[currentItem];
+      return resObj;
+    }, {});
   }
 }
 
