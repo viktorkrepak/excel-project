@@ -1,15 +1,22 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { createTable } from '@/components/table/table.template';
 import {
-  isSell,
+  isCell,
   shouldResize,
   tableResize,
-  range,
   matrix,
   nextSelector
 } from '@/components/table/table.utils';
 import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom';
+import {
+  actionTableResize,
+  applyStyle,
+  changeStyles,
+  changeText
+} from '@/store/actions';
+import { defaultStyles } from '@/Constants';
+import { parse } from '@core/parse';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -23,7 +30,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable();
+    return createTable(20, this.store.getState());
   }
 
   prepare() {
@@ -35,22 +42,44 @@ export class Table extends ExcelComponent {
     const $firstCell = this.$root.find('[data-id="0:0"');
     this.emitCell($firstCell);
     this.$on('formula:input', text => {
+      this.selection.current.attr('data-value', text).text(parse(text));
       this.selection.current.text(text);
+      this.updateTextInStore(text);
     });
     this.$on('formula:done', () => {
       this.selection.current.focus();
     });
+    this.$on('toolbar:applyStyle', value => {
+      this.selection.applyStyle(value);
+      this.$dispatch(
+        applyStyle({
+          value,
+          ids: this.selection.selectedIds
+        })
+      );
+    });
   }
 
-  emitCell(cell) {
-    this.selection.selectCell(cell);
-    this.$emit('table:select', cell);
+  emitCell($cell) {
+    this.selection.selectCell($cell);
+    this.$emit('table:select', $cell);
+    const styles = $cell.getStyles(Object.keys(defaultStyles));
+    this.$dispatch(changeStyles(styles));
+  }
+
+  async resizeTable(e) {
+    try {
+      const data = await tableResize(e, this.$root);
+      this.$dispatch(actionTableResize(data));
+    } catch (e) {
+      console.error(e.message);
+    }
   }
 
   onMousedown(e) {
     if (shouldResize(e)) {
-      tableResize(e, this.$root);
-    } else if (isSell(e)) {
+      this.resizeTable(e);
+    } else if (isCell(e)) {
       const $target = $(e.target);
 
       if (e.shiftKey) {
@@ -82,7 +111,16 @@ export class Table extends ExcelComponent {
       this.emitCell($next);
     }
   }
+
+  updateTextInStore(text) {
+    this.$dispatch(
+      changeText({
+        id: this.selection.current.id(),
+        text
+      })
+    );
+  }
   onInput(event) {
-    this.$emit('table:input', $(event.target));
+    this.updateTextInStore($(event.target).text());
   }
 }
