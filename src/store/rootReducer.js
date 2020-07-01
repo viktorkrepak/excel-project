@@ -2,11 +2,12 @@ import {
   CHANGE_TEXT,
   CHANGE_STYLES,
   TABLE_RESIZE,
-  APPLY_STYLES
+  APPLY_STYLES,
+  UPDATE_DATE
 } from './types';
-import { storage, stylesToInline } from '@core/utils';
 import { defaultMainTitle, defaultStyles } from '@/Constants';
 import { CHANGE_TITLE } from '@/store/types';
+import { clone } from '@core/utils';
 
 const defaultState = {
   rowState: {},
@@ -15,7 +16,8 @@ const defaultState = {
   stylesState: {},
   currentText: '',
   mainTitle: defaultMainTitle,
-  currentStyles: defaultStyles
+  currentStyles: defaultStyles,
+  openedDate: new Date().toJSON()
 };
 const normalizeState = state => ({
   ...state,
@@ -23,12 +25,11 @@ const normalizeState = state => ({
   currentText: ''
 });
 
-export const initialState = storage('excel-state')
-  ? normalizeState(storage('excel-state'))
-  : defaultState;
+export function normalizeInitialState(state) {
+  return state ? normalizeState(state) : clone(defaultState);
+}
 
 export function rootReducer(state, action) {
-  let prevState;
   let field;
   let val;
   switch (action.type) {
@@ -58,6 +59,8 @@ export function rootReducer(state, action) {
     case CHANGE_TITLE:
       console.log(action.payload);
       return { ...state, mainTitle: action.payload };
+    case UPDATE_DATE:
+      return { ...state, openedDate: new Date().toJSON() };
     default:
       return state;
   }

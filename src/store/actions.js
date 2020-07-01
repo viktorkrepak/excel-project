@@ -1,10 +1,11 @@
 import {
+  UPDATE_DATE,
   CHANGE_TEXT,
   CHANGE_STYLES,
   TABLE_RESIZE,
   APPLY_STYLES,
   CHANGE_TITLE
-} from './types';
+} from '@/store/types';
 
 export function actionTableResize(data) {
   return {
@@ -40,5 +41,11 @@ export function changeTitle(text) {
   return {
     type: CHANGE_TITLE,
     payload: text
+  };
+}
+
+export function updateDate() {
+  return {
+    type: UPDATE_DATE
   };
 }
