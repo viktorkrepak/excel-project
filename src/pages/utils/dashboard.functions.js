@@ -2,7 +2,6 @@ import { storage } from '@core/utils';
 
 function toHTML(key) {
   const model = storage(key);
-  console.log(model, 'model');
   const id = key.split(':')[1];
   return `        <li class="db__record">
           <a href="#excel/${id}">${model.mainTitle}</a>

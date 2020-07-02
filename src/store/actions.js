@@ -37,7 +37,6 @@ export function applyStyle(data) {
 }
 
 export function changeTitle(text) {
-  console.log(text);
   return {
     type: CHANGE_TITLE,
     payload: text
