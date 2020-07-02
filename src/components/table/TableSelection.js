@@ -10,7 +10,6 @@ export class TableSelection {
     this.cellGroup.push($node);
     $node.focus().addClass(TableSelection.className);
     this.current = $node;
-    console.log($node.getStyles(['fontWeight', 'fontStyle']));
   }
 
   clear() {

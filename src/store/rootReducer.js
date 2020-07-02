@@ -57,7 +57,6 @@ export function rootReducer(state, action) {
     case CHANGE_STYLES:
       return { ...state, currentStyles: action.payload };
     case CHANGE_TITLE:
-      console.log(action.payload);
       return { ...state, mainTitle: action.payload };
     case UPDATE_DATE:
       return { ...state, openedDate: new Date().toJSON() };

@@ -13,7 +13,6 @@ export class Header extends ExcelComponent {
 
   toHTML() {
     const title = this.store.getState().mainTitle || defaultMainTitle;
-    console.log(title);
     return `
       <input type="text" class="input" value="${title}" />
 
@@ -47,7 +46,6 @@ export class Header extends ExcelComponent {
   }
   onInput(event) {
     const $target = $(event.target);
-    console.log($target);
     this.$dispatch(changeTitle($target.text()));
   }
 }
